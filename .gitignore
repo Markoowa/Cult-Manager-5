@@ -1,0 +1,6 @@
+data/api_key.txt
+data/clan_id.txt
+data/backups/*
+source/__pycache__
+venv
+.idea
