@@ -39,12 +39,16 @@ def save_data():
 
 if __name__ == '__main__':
     while True:
-        load_data()
+        try:
+            load_data()
 
-        clan_checkup(data, clan_id)
+            clan_checkup(data, clan_id)
 
-        save_data()
+            save_data()
 
-        backup()
+            backup()
 
-        sleep(1+data['request_counter'])
+            sleep(1+data['request_counter'])
+        except Exception as err:
+            print('im dead', err)
+            sleep(3+data['request_counter'])
