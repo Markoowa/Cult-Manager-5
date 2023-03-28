@@ -227,7 +227,7 @@ def finish_vote(data: dict):
     winner, voters = results[0], voters[0]
     if winner != 'none':
         msg = f'Quest "{winner}" won the vote, the quest will be started in 12 hours'
-        if data['availableQuests'][winner]['purchasableWithGems']: msg += f'\n{plist(voters)} voted for the quest and will either join it or lose 1000 gold from their balances'
+        if data['availableQuests'][winner]['purchasableWithGems']: msg += f'\n{plist([id_to_nick(data, m_id) for m_id in voters])} voted for the quest and will either join it or lose 1000 gold from their balances'
         send_message(data, msg)
         data['qm'] = {'state': 'wait', 'since': dt_to_str(dt.datetime.utcnow()), 'voters': voters, 'winner': winner, 'reminders': 3}
     elif dt.datetime.utcnow().weekday() != 0:
@@ -260,7 +260,7 @@ def vote_result(data: dict):
     winners = sorted(votes, key=lambda x: votes[x], reverse=True)
     voters = []
     for winner in winners:
-        voters.append([m_id for m_id in data if data[m_id] == winner])
+        voters.append([m_id for m_id in data['qm']['votes'] if data['qm']['votes'][m_id] == winner and m_id in data['m']])
     return winners, voters
 
 
